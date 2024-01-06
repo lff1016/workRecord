@@ -73,7 +73,6 @@ const CalendarPicker = (props: CalendarPickerProps) => {
             format={getFormat()}
             className='my-year-select'
             onChange={newDate => {
-              console.log(newDate);
               onChange(newDate);
             }}
             value={value}

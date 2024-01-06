@@ -134,7 +134,6 @@ const Home: React.FC = () => {
   };
 
   const cellHeaderRender = (date: Dayjs) => {
-    console.log('date', date.format('YYYY-MM-DD'), dayjs().format('YYYY-MM-DD'), dayjs().isSame(date));
     return (
       <div className='headerView'>
         {date.format('YYYY-MM-DD') === dayjs().format('YYYY-MM-DD') && <RedditOutlined className='flagStyle' />}
