@@ -5,6 +5,25 @@
   height: 100%;
   padding: 8px 16px;
 
+  .headerView {
+    position: absolute;
+    top: 10px;
+    right: 30px;
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+
+    span {
+      color: #474e62;
+      font-family: AlibabaPuHuiTi-Medium, AlibabaPuHuiTi;
+      font-weight: 500;
+    }
+
+    .flagStyle {
+      color: #1677ff;
+    }
+  }
+
 
 
   .ant-picker-cell-disabled {
@@ -52,24 +71,7 @@
     .ant-picker-calendar-date-content {
       height: @contentHeight;
     }
-    .headerView {
-      position: absolute;
-      top: 10px;
-      right: 30px;
-      display: flex;
-      align-items: center;
-      flex-direction: row-reverse;
-
-      span {
-        color: #474e62;
-        font-family: AlibabaPuHuiTi-Medium, AlibabaPuHuiTi;
-        font-weight: 500;
-      }
-
-      .flagStyle {
-        color: #1677ff;
-      }
-    }
+    
   }
 
   .ant-picker-content th,
@@ -81,11 +83,11 @@
   .ant-picker-calendar-full .ant-picker-panel .ant-picker-body th {
     padding: 15px 0;
     color: #292d37;
-    font-weight: 500;
-    font-size: 14px;
+    font-weight: 800;
+    font-size: 16px;
     font-family: AlibabaPuHuiTi-Medium, AlibabaPuHuiTi;
     text-align: center;
-    background: #f6f7fa;
+    background: #f3f3f3;
   }
   
   .date-cell {

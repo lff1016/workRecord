@@ -133,15 +133,20 @@ const Home: React.FC = () => {
     return weeklyDisabled || inWeekDisabled;
   };
 
-  const cellHeaderRender = (date: Dayjs) => {
+  const cellHeaderRender = (date: Dayjs, isWork?: boolean) => {
     return (
       <div className='headerView'>
+        {isWork && (
+          <div className='flagStyle' style={{ color: 'red', fontSize: 12, marginTop: -2 }}>
+            班
+          </div>
+        )}
         {date.format('YYYY-MM-DD') === dayjs().format('YYYY-MM-DD') && <RedditOutlined className='flagStyle' />}
       </div>
     );
   };
 
-  const dateCellRender = (value: Dayjs, item: DateItemType) => {
+  const dateCellRender = (value: Dayjs, item: DateItemType, isWork: boolean) => {
     if (item.isHoliday) {
       return (
         <div className='date-cell' onClick={e => onEdit(e, item)}>
@@ -153,7 +158,7 @@ const Home: React.FC = () => {
       const { details } = item;
       return (
         <div className='date-cell' onClick={() => onAdd(value)}>
-          {cellHeaderRender(value)}
+          {cellHeaderRender(value, isWork)}
           <ul className='content-wrap'>
             {details?.map((info, index) => (
               <li key={info.id} className='content-item'>
@@ -191,12 +196,12 @@ const Home: React.FC = () => {
     }
     for (const item of dataSource) {
       if (current.format('YYYY-MM-DD') === item.workDate) {
-        return dateCellRender(current, item);
+        return dateCellRender(current, item, !isRest);
       }
     }
     return (
       <div className='date-cell' onClick={() => onAdd(current)}>
-        {cellHeaderRender(current)}
+        {cellHeaderRender(current, !isRest)}
       </div>
     );
   };
