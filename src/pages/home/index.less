@@ -3,11 +3,88 @@
   width: 95%;
   margin: 48px auto;
   border: 1px solid rgb(217, 217, 217);
+  box-shadow:  0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.10), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
   padding: 8px 16px;
   .ant-picker-cell-disabled {
     background: #f5f5f5;
     border-color: #d9d9d9;
     cursor: not-allowed;
+  }
+  .ant-picker-calendar-full {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 140px);
+  }
+
+  .ant-picker-panel {
+    flex: 1;
+    overflow-y: auto;
+
+    .ant-picker-body {
+      padding: 0;
+    }
+  }
+
+  .ant-picker-calendar-full .ant-picker-panel .ant-picker-calendar-date {
+    margin: 0;
+    border-top: none;
+  }
+
+  .ant-picker-cell {
+    .calendarCell {
+      padding: 12px;
+
+      .headerView {
+        span {
+          font-family: AlibabaPuHuiTi-Medium, AlibabaPuHuiTi;
+          font-weight: 500;
+          color: #999;
+        }
+      }
+    }
+  }
+
+  .ant-picker-cell-in-view {
+    position: relative;
+    .headerView {
+      position: absolute;
+      top: 11px;
+      right: 30px;
+      display: flex;
+      align-items: center;
+      flex-direction: row-reverse;
+
+      span {
+        color: #474e62;
+        font-family: AlibabaPuHuiTi-Medium, AlibabaPuHuiTi;
+        font-weight: 500;
+      }
+
+      .flagStyle {
+        width: 12px;
+        height: 12px;
+        border-radius: 10px;
+        background-color: #1677ff;
+        margin-right: 5px;
+        display: inline-block;
+      }
+    }
+  }
+
+  .ant-picker-content th,
+  .ant-picker-content td {
+    border: 0.5px solid #e7e9ed;
+    vertical-align: initial;
+  }
+
+  .ant-picker-calendar-full .ant-picker-panel .ant-picker-body th {
+    padding: 15px 0;
+    color: #292d37;
+    font-weight: 500;
+    font-size: 14px;
+    font-family: AlibabaPuHuiTi-Medium, AlibabaPuHuiTi;
+    text-align: center;
+    background: #f6f7fa;
   }
   
   .date-cell {
@@ -65,5 +142,6 @@
   .topView {
     display: flex;
     justify-content: end;
+    margin-bottom: 16px;
   }
 }

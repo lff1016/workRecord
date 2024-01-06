@@ -133,10 +133,16 @@ const Home: React.FC = () => {
     return weeklyDisabled || inWeekDisabled;
   };
 
+  const cellHeaderRender = (date: Dayjs) => {
+    console.log('date', date.format('YYYY-MM-DD'), dayjs().format('YYYY-MM-DD'), dayjs().isSame(date));
+    return <div className='headerView'>{date.format('YYYY-MM-DD') === dayjs().format('YYYY-MM-DD') && <div className='flagStyle' />}</div>;
+  };
+
   const dateCellRender = (value: Dayjs, item: DateItemType) => {
     if (item.isHoliday) {
       return (
         <div className='date-cell' onClick={e => onEdit(e, item)}>
+          {cellHeaderRender(value)}
           <div className='isSelfHoliday'>假</div>
         </div>
       );
@@ -144,6 +150,7 @@ const Home: React.FC = () => {
       const { details } = item;
       return (
         <div className='date-cell' onClick={() => onAdd(value)}>
+          {cellHeaderRender(value)}
           <ul className='content-wrap'>
             {details?.map((info, index) => (
               <li key={info.id} className='content-item'>
@@ -171,6 +178,7 @@ const Home: React.FC = () => {
     if (isHoliday && isRest) {
       return (
         <div className='date-cell'>
+          {cellHeaderRender(current)}
           <div className='holiday-wrap'>
             <div className='holiday-mark'>休</div>
             <div className='holiday-name'>{displayHoliday}</div>
@@ -183,7 +191,11 @@ const Home: React.FC = () => {
         return dateCellRender(current, item);
       }
     }
-    return <div className='date-cell' onClick={() => onAdd(current)}></div>;
+    return (
+      <div className='date-cell' onClick={() => onAdd(current)}>
+        {cellHeaderRender(current)}
+      </div>
+    );
   };
 
   const headerRender = ({ value, _, onChange }: any) => {
