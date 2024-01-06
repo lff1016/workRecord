@@ -198,7 +198,8 @@ const Home: React.FC = () => {
     );
   };
 
-  const headerRender = ({ value, _, onChange }: any) => {
+  const headerRender = ({ value, type, onChange }: any) => {
+    console.log('type ', type);
     return (
       <div className='topView'>
         <div style={{ marginRight: 16 }}>

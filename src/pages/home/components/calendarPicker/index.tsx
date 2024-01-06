@@ -1,8 +1,11 @@
 import { Col, DatePicker, Row, Select } from 'antd';
 import type { Dayjs } from 'dayjs';
-
+import dayjs from 'dayjs';
+import dayLocaleData from 'dayjs/plugin/localeData';
 import './index.less';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+
+dayjs.extend(dayLocaleData);
 
 interface CalendarPickerProps {
   value: Dayjs;
@@ -11,14 +14,12 @@ interface CalendarPickerProps {
 }
 const CalendarPicker = (props: CalendarPickerProps) => {
   const { value, onChange, picker } = props;
-  const year = value.year();
-  const options = [];
   const start = 0;
   const end = 12;
   const monthOptions = [];
 
   const current = value.clone();
-  const localeData = value.localeData();
+  const localeData = value?.localeData();
   const months = [];
   for (let i = 0; i < 12; i++) {
     current.month(i);
@@ -29,13 +30,6 @@ const CalendarPicker = (props: CalendarPickerProps) => {
     monthOptions.push(
       <Select.Option className='month-item' key={`${index}`} value={index}>
         {months[index]}
-      </Select.Option>
-    );
-  }
-  for (let i = year - 10; i < year + 10; i += 1) {
-    options.push(
-      <Select.Option key={i} value={i} className='year-item'>
-        {i}
       </Select.Option>
     );
   }
@@ -83,9 +77,8 @@ const CalendarPicker = (props: CalendarPickerProps) => {
               onChange(newDate);
             }}
             value={value}
-          >
-            {options}
-          </DatePicker>
+          />
+          {/* {options} */}
           <div
             className='yearPickerRight'
             onClick={() => {
