@@ -9,7 +9,7 @@ import 'dayjs/locale/zh-cn';
 import EditComp from './components/EditComp';
 import './index.less';
 import { cloneDeep } from 'lodash';
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, RedditOutlined } from '@ant-design/icons';
 import CalendarPicker from './components/calendarPicker';
 
 dayjs.locale('zh-cn');
@@ -135,7 +135,11 @@ const Home: React.FC = () => {
 
   const cellHeaderRender = (date: Dayjs) => {
     console.log('date', date.format('YYYY-MM-DD'), dayjs().format('YYYY-MM-DD'), dayjs().isSame(date));
-    return <div className='headerView'>{date.format('YYYY-MM-DD') === dayjs().format('YYYY-MM-DD') && <div className='flagStyle' />}</div>;
+    return (
+      <div className='headerView'>
+        {date.format('YYYY-MM-DD') === dayjs().format('YYYY-MM-DD') && <RedditOutlined className='flagStyle' />}
+      </div>
+    );
   };
 
   const dateCellRender = (value: Dayjs, item: DateItemType) => {
@@ -221,12 +225,7 @@ const Home: React.FC = () => {
 
   return (
     <div className='date-picker'>
-      <Calendar
-        headerRender={headerRender}
-        cellRender={cellRender}
-        disabledDate={currentDate => getDisabledDay(currentDate)}
-        // onSelect={onAdd}
-      />
+      <Calendar fullscreen headerRender={headerRender} cellRender={cellRender} disabledDate={currentDate => getDisabledDay(currentDate)} />
     </div>
   );
 };
