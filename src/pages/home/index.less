@@ -1,9 +1,13 @@
-@cellHeight: calc((100vh - 100px) /6);
+@cellHeight: calc((100vh - 145px) /6);
 @contentHeight: calc(@cellHeight - 28px);
 
 .date-picker {
   height: 100%;
   padding: 8px 16px;
+  
+  table {
+    border-collapse: separate !important;
+  }
 
   .headerView {
     position: absolute;
@@ -72,6 +76,9 @@
       height: @contentHeight;
     }
     
+    &:hover {
+      border: 1px solid black;
+    }
   }
 
   .ant-picker-content th,
@@ -92,10 +99,15 @@
   
   .date-cell {
     padding: 0 8px;
+    width: 100%;
+    height: 100%;
+    position: relative;
 
 
     .isSelfHoliday {
-      margin: 20px auto;
+      position: absolute;
+      top: 20%;
+      left: 40%;
       width: 40px;
       height: 40px;
       color: #f73131;
@@ -143,6 +155,6 @@
   .topView {
     display: flex;
     justify-content: end;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
   }
 }

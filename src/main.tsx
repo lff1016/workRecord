@@ -8,7 +8,12 @@ import './global.css';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <ConfigProvider locale={zhCN}>
+    <ConfigProvider
+      locale={zhCN}
+      theme={{
+        token: { controlItemBgHover: '#fff' }
+      }}
+    >
       <NiceModal.Provider>
         <App />
       </NiceModal.Provider>

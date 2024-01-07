@@ -7,11 +7,12 @@ import { useModal } from '@ebay/nice-modal-react';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
 import EditComp from './components/EditComp';
-import './index.less';
 import { cloneDeep } from 'lodash';
 import { DeleteOutlined, EditOutlined, RedditOutlined } from '@ant-design/icons';
 import CalendarPicker from './components/calendarPicker';
 import { useExcel } from '../../hooks';
+import './index.less';
+
 dayjs.locale('zh-cn');
 
 type ContentType = {
