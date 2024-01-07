@@ -135,20 +135,22 @@ const Home: React.FC = () => {
   // 导出文件
   const onExport = () => {
     const data: DateItemType[] = JSON.parse(localStorage.getItem('word_record') || '[]');
-    const newData = orderBy(data, ['workDate']).map(item => {
-      return {
-        ...item,
-        isHoliday: item.isHoliday ? '是' : '否',
-        details: item.details.reduce((pre: string, cur: any) => {
-          if (item.isHoliday) return '';
-          if (pre) {
-            return `${pre}\n${cur?.content}`;
-          } else {
-            return `${pre}${cur?.content}`;
-          }
-        }, '')
-      };
-    });
+    const newData = orderBy(data, ['workDate'])
+      .map(item => {
+        return {
+          ...item,
+          isHoliday: item.isHoliday ? '是' : '否',
+          details: item.details.reduce((pre: string, cur: any) => {
+            if (item.isHoliday) return '';
+            if (pre) {
+              return `${pre}\n${cur?.content}`;
+            } else {
+              return `${pre}${cur?.content}`;
+            }
+          }, '')
+        };
+      })
+      .filter(item => item?.details?.length !== 0);
     exportExcel(newData);
   };
 
