@@ -11,7 +11,7 @@ import './index.less';
 import { cloneDeep } from 'lodash';
 import { DeleteOutlined, EditOutlined, RedditOutlined } from '@ant-design/icons';
 import CalendarPicker from './components/calendarPicker';
-
+import { useExcel } from '../../hooks';
 dayjs.locale('zh-cn');
 
 type ContentType = {
@@ -29,6 +29,8 @@ const colors = ['red', 'green', 'orange', 'cyan', 'blue', 'volcano', 'gold', 'li
 const Home: React.FC = () => {
   const [dataSource, setDataSource] = useState<DateItemType[]>([]);
   const editModal = useModal(EditComp);
+  const { exportExcel } = useExcel();
+
   // 是否为节假日
   const isHoliday = (date: Dayjs) => {
     // 通过年月日获取法定节假日
@@ -124,6 +126,22 @@ const Home: React.FC = () => {
     }
   };
 
+  // 导出文件
+  const onExport = () => {
+    const data: DateItemType[] = JSON.parse(localStorage.getItem('word_record') || '[]');
+    const newData = data.map(item => {
+      return {
+        ...item,
+        isHoliday: item.isHoliday ? '是' : '否',
+        details: item.details.reduce((pre: string, cur: any) => {
+          if (item.isHoliday) return '';
+          return `${pre}\n${cur?.content}`;
+        }, '')
+      };
+    });
+    exportExcel(newData);
+  };
+
   // 获取不可不编辑的日期
   const getDisabledDay = (date: Dayjs): boolean => {
     // 周末，但是去除周末需要上班的
@@ -210,7 +228,10 @@ const Home: React.FC = () => {
     console.log('type ', type);
     return (
       <div className='topView'>
-        <div style={{ marginRight: 16 }}>
+        <Button type='primary' onClick={onExport}>
+          全部导出
+        </Button>
+        <div style={{ margin: '0 16px' }}>
           <Button type='primary' onClick={onSave}>
             保存
           </Button>
