@@ -7,7 +7,7 @@ import { useModal } from '@ebay/nice-modal-react';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
 import EditComp from './components/EditComp';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, orderBy, remove } from 'lodash';
 import { DeleteOutlined, EditOutlined, RedditOutlined } from '@ant-design/icons';
 import CalendarPicker from './components/calendarPicker';
 import { useExcel } from '../../hooks';
@@ -113,6 +113,11 @@ const Home: React.FC = () => {
 
     newDataSource[targetIdx].details.splice(editItemDetailIdx, 1);
 
+    // 如果 details 没值，直接删除当天的数据
+    if (newDataSource[targetIdx].details?.length == 0) {
+      remove(newDataSource, item => item.workDate == detail.workDate);
+    }
+
     setDataSource(newDataSource);
   };
 
@@ -130,13 +135,17 @@ const Home: React.FC = () => {
   // 导出文件
   const onExport = () => {
     const data: DateItemType[] = JSON.parse(localStorage.getItem('word_record') || '[]');
-    const newData = data.map(item => {
+    const newData = orderBy(data, ['workDate']).map(item => {
       return {
         ...item,
         isHoliday: item.isHoliday ? '是' : '否',
         details: item.details.reduce((pre: string, cur: any) => {
           if (item.isHoliday) return '';
-          return `${pre}\n${cur?.content}`;
+          if (pre) {
+            return `${pre}\n${cur?.content}`;
+          } else {
+            return `${pre}${cur?.content}`;
+          }
         }, '')
       };
     });

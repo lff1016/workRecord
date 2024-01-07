@@ -1,9 +1,11 @@
 @cellHeight: calc((100vh - 145px) /6);
 @contentHeight: calc(@cellHeight - 28px);
+@primary: #1677ff;
 
 .date-picker {
   height: 100%;
   padding: 8px 16px;
+  position: relative;
   
   table {
     border-collapse: separate !important;
@@ -11,8 +13,7 @@
 
   .headerView {
     position: absolute;
-    top: 10px;
-    right: 30px;
+    right: 0;
     display: flex;
     align-items: center;
     flex-direction: row-reverse;
@@ -24,7 +25,7 @@
     }
 
     .flagStyle {
-      color: #1677ff;
+      color: @primary;
     }
   }
 
@@ -145,7 +146,7 @@
             margin:0 3px;
           }
           .content-icon:hover {
-            color: #1677ff;
+            color: @primary;
           }
         }
       }
