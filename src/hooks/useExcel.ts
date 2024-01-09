@@ -9,6 +9,7 @@ const useExcel = () => {
 
     // 导出表格增加换行样式
     for (let R = worksheet['!ref']!.split(':')[0].charCodeAt(1); R <= worksheet['!ref']!.split(':')[1].charCodeAt(1); ++R) {
+      // C 列单元格换行
       const cell_address = { c: 2, r: R - 49 }; // 假设 c 列是第3列（即字母C，所以数字索引为2）
       const cell_ref = utils.encode_cell(cell_address);
 
@@ -27,7 +28,7 @@ const useExcel = () => {
     const max_width = data.reduce((w, r) => Math.max(w, r.details.length), 20);
     worksheet['!cols'] = [{ wch: max_width }];
 
-    const today = dayjs().format('YYYY-MM-DD HH:mm:ss');
+    const today = dayjs().format('YYYY-MM-DD');
 
     writeFile(workbook, `${fileName}-${today}.xlsx`, { compression: true });
   }, []);

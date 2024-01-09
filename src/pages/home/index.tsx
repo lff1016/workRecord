@@ -8,9 +8,9 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
 import EditComp from './components/EditComp';
 import { cloneDeep, orderBy, remove } from 'lodash';
-import { DeleteOutlined, EditOutlined, RedditOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import CalendarPicker from './components/calendarPicker';
-import { useExcel } from '../../hooks';
+import { useExcel } from '@/hooks';
 import './index.less';
 
 dayjs.locale('zh-cn');
@@ -163,7 +163,7 @@ const Home: React.FC = () => {
     return weeklyDisabled || inWeekDisabled;
   };
 
-  const cellHeaderRender = (date: Dayjs, isWork?: boolean) => {
+  const cellHeaderRender = (isWork?: boolean) => {
     return (
       <div className='headerView'>
         {isWork && (
@@ -171,24 +171,31 @@ const Home: React.FC = () => {
             班
           </div>
         )}
-        {date.format('YYYY-MM-DD') === dayjs().format('YYYY-MM-DD') && <RedditOutlined className='flagStyle' />}
       </div>
     );
   };
 
+  const getBackground = (value: Dayjs) => {
+    // NOTE: 通过行内样式替换掉class样式，达到变量控制
+    if (value.format('YYYY-MM-DD') !== dayjs().format('YYYY-MM-DD')) {
+      return 'url()';
+    }
+  };
+
   const dateCellRender = (value: Dayjs, item: DateItemType, isWork: boolean) => {
+    console.log('getBackground(value)', getBackground(value), value.format('YYYY-MM-DD'));
     if (item.isHoliday) {
       return (
-        <div className='date-cell' onClick={e => onEdit(e, item)}>
-          {cellHeaderRender(value)}
+        <div className='date-cell' onClick={e => onEdit(e, item)} style={{ backgroundImage: getBackground(value) }}>
+          {cellHeaderRender()}
           <div className='isSelfHoliday'>假</div>
         </div>
       );
     } else {
       const { details } = item;
       return (
-        <div className='date-cell' onClick={() => onAdd(value)}>
-          {cellHeaderRender(value, isWork)}
+        <div className='date-cell' onClick={() => onAdd(value)} style={{ backgroundImage: getBackground(value) }}>
+          {cellHeaderRender(isWork)}
           <ul className='content-wrap'>
             {details?.map((info, index) => (
               <li key={info.id} className='content-item'>
@@ -215,8 +222,8 @@ const Home: React.FC = () => {
     const isHoliday = !!h;
     if (isHoliday && isRest) {
       return (
-        <div className='date-cell'>
-          {cellHeaderRender(current)}
+        <div className='date-cell' style={{ backgroundImage: getBackground(current) }}>
+          {cellHeaderRender()}
           <div className='holiday-wrap'>
             <div className='holiday-mark'>休</div>
             <div className='holiday-name'>{displayHoliday}</div>
@@ -230,8 +237,8 @@ const Home: React.FC = () => {
       }
     }
     return (
-      <div className='date-cell' onClick={() => onAdd(current)}>
-        {cellHeaderRender(current, !isRest)}
+      <div className='date-cell' onClick={() => onAdd(current)} style={{ backgroundImage: getBackground(current) }}>
+        {cellHeaderRender(!isRest)}
       </div>
     );
   };
