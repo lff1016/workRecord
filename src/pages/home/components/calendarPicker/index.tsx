@@ -1,64 +1,64 @@
-import { Col, DatePicker, Row, Select } from 'antd';
-import type { Dayjs } from 'dayjs';
-import dayjs from 'dayjs';
-import dayLocaleData from 'dayjs/plugin/localeData';
-import './index.less';
-import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+import { Col, DatePicker, Row, Select } from 'antd'
+import type { Dayjs } from 'dayjs'
+import dayjs from 'dayjs'
+import dayLocaleData from 'dayjs/plugin/localeData'
+import './index.less'
+import { LeftOutlined, RightOutlined } from '@ant-design/icons'
 
-dayjs.extend(dayLocaleData);
+dayjs.extend(dayLocaleData)
 
 interface CalendarPickerProps {
-  value: Dayjs;
-  onChange: any;
-  picker: string;
+  value: Dayjs
+  onChange: any
+  picker: string
 }
 const CalendarPicker = (props: CalendarPickerProps) => {
-  const { value, onChange, picker } = props;
-  const start = 0;
-  const end = 12;
-  const monthOptions = [];
+  const { value, onChange, picker } = props
+  const start = 0
+  const end = 12
+  const monthOptions = []
 
-  const current = value.clone();
-  const localeData = value?.localeData();
-  const months = [];
+  const current = value.clone()
+  const localeData = value?.localeData()
+  const months = []
   for (let i = 0; i < 12; i++) {
-    current.month(i);
-    months.push(localeData.monthsShort(current));
+    current.month(i)
+    months.push(localeData.monthsShort(current))
   }
 
   for (let index = start; index < end; index++) {
     monthOptions.push(
-      <Select.Option className='month-item' key={`${index}`} value={index}>
+      <Select.Option className="month-item" key={`${index}`} value={index}>
         {months[index]}
       </Select.Option>
-    );
+    )
   }
 
   const getFormat = () => {
-    let formatStr = 'YYYY年MM月DD日';
+    let formatStr = 'YYYY年MM月DD日'
     if (picker === 'week') {
-      formatStr = 'YYYY年WW周';
+      formatStr = 'YYYY年WW周'
     } else if (picker === 'month') {
-      formatStr = 'YYYY年MM月';
+      formatStr = 'YYYY年MM月'
     }
-    return formatStr;
-  };
+    return formatStr
+  }
 
   return (
-    <Row className='calendarPicker'>
+    <Row className="calendarPicker">
       <Col>
-        <div className='yearPicker'>
+        <div className="yearPicker">
           <div
-            className='yearPickerLeft'
+            className="yearPickerLeft"
             onClick={() => {
-              let type: any = 'day';
+              let type: any = 'day'
               if (picker === 'week') {
-                type = 'week';
+                type = 'week'
               } else if (picker === 'month') {
-                type = 'month';
+                type = 'month'
               }
-              const newValue = value.subtract(1, type).clone();
-              onChange(newValue);
+              const newValue = value.subtract(1, type).clone()
+              onChange(newValue)
             }}
             style={{ marginRight: -1 }}
           >
@@ -69,26 +69,26 @@ const CalendarPicker = (props: CalendarPickerProps) => {
             picker={picker as any}
             suffixIcon={null}
             style={{ width: '115px', height: '32px' }}
-            size='middle'
+            size="middle"
             format={getFormat()}
-            className='my-year-select'
+            className="my-year-select"
             onChange={newDate => {
-              onChange(newDate);
+              onChange(newDate)
             }}
             value={value}
           />
           {/* {options} */}
           <div
-            className='yearPickerRight'
+            className="yearPickerRight"
             onClick={() => {
-              let type: any = 'day';
+              let type: any = 'day'
               if (picker === 'week') {
-                type = 'week';
+                type = 'week'
               } else if (picker === 'month') {
-                type = 'month';
+                type = 'month'
               }
-              const newValue = value.add(1, type).clone();
-              onChange(newValue);
+              const newValue = value.add(1, type).clone()
+              onChange(newValue)
             }}
             style={{ marginLeft: -1 }}
           >
@@ -97,7 +97,7 @@ const CalendarPicker = (props: CalendarPickerProps) => {
         </div>
       </Col>
     </Row>
-  );
-};
+  )
+}
 
-export default CalendarPicker;
+export default CalendarPicker
